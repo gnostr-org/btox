@@ -67,8 +67,8 @@ enum HyphenItemSelect {
 
 impl HyphenItemSelect {
     fn_str_map! {
-        HyphenItemSelect::WithHyphen => "With hyphen",
-        HyphenItemSelect::WithoutHyphen => "Without hyphen",
+        HyphenItemSelect::WithHyphen => "With-Hyphen",
+        HyphenItemSelect::WithoutHyphen => "WithoutHyphen",
     }
 
     fn_next_prev_mut! {}
@@ -84,8 +84,8 @@ enum CaseItemSelect {
 
 impl CaseItemSelect {
     fn_str_map! {
-        CaseItemSelect::Lowercase => "Lowercase",
-        CaseItemSelect::Uppercase => "Uppercase",
+        CaseItemSelect::Lowercase => "lower-case",
+        CaseItemSelect::Uppercase => "UPPER-CASE",
     }
 
     fn_next_prev_mut! {}
@@ -110,22 +110,69 @@ impl Page for UuidPage {
     fn handle_key(&self, key: crossterm::event::KeyEvent) -> Option<Msg> {
         match key {
             key_code!(KeyCode::Esc) => Some(Msg::Quit),
+
+            // right-handed key commands
+
+            // Control-n or Shift-n or Arrow Down
             key_code_char!('n', Ctrl) => Some(Msg::UuidPageSelectNextItem),
             key_code_char!('N') => Some(Msg::UuidPageSelectNextItem),
-            key_code_char!('p', Ctrl) => Some(Msg::UuidPageSelectPrevItem),
-            key_code_char!('P') => Some(Msg::UuidPageSelectPrevItem),
+            key_code!(KeyCode::Down) => Some(Msg::UuidPageSelectNextItem),
 
-            //
-            key_code_char!('l') => {
+            // Control-m or Shift-m or Arrow Up
+            key_code_char!('m', Ctrl) => Some(Msg::UuidPageSelectPrevItem),
+            key_code_char!('M') => Some(Msg::UuidPageSelectPrevItem),
+            key_code!(KeyCode::Up) => Some(Msg::UuidPageSelectPrevItem),
+
+            // Lower Case
+            key_code_char!('l') | key_code!(KeyCode::Right) => {
                 Some(Msg::UuidPageCurrentItemSelectNext)
             }
+            // Upper Case
+            key_code_char!('L') => {
+                Some(Msg::UuidPageCurrentItemSelectNext)
+            }
+            // Shift .
+            key_code_char!('>') => {
+                Some(Msg::UuidPageCurrentItemSelectNext)
+            }
+
+            // Lower Case
             key_code_char!('h') | key_code!(KeyCode::Left) => {
                 Some(Msg::UuidPageCurrentItemSelectPrev)
             }
-            key_code_char!('j') | key_code!(KeyCode::Down) => Some(Msg::UuidPageScrollDown),
-            key_code_char!('k') | key_code!(KeyCode::Up) => Some(Msg::UuidPageScrollUp),
+            // Upper Case
+            key_code_char!('H') => {
+                Some(Msg::UuidPageCurrentItemSelectPrev)
+            }
+            // Shift ,
+            key_code_char!('<') => {
+                Some(Msg::UuidPageCurrentItemSelectPrev)
+            }
+
+            // Lower Case
+            key_code_char!('j') => Some(Msg::UuidPageScrollDown),
+            // Shift j
+            key_code_char!('J') => Some(Msg::UuidPageScrollDown),
+
+            // Lower Case
+            key_code_char!('k') => Some(Msg::UuidPageScrollUp),
+            // Shift k
+            key_code_char!('K') => Some(Msg::UuidPageScrollUp),
+
+            // Lower Case y (yank?)
             key_code_char!('y') => Some(Msg::UuidPageCopy),
-            key_code_char!('p') => Some(Msg::UuidPagePaste),
+
+            // Copy
+            // Common Key Command
+            key_code_char!('v', Ctrl) => Some(Msg::UuidPageCopy),
+            // Shift v
+            key_code_char!('V') => Some(Msg::UuidPageCopy),
+
+            // Paste
+            // Common Key Command
+            key_code_char!('p', Ctrl) => Some(Msg::UuidPagePaste),
+            // Shift p
+            key_code_char!('P') => Some(Msg::UuidPagePaste),
 
             //
             key_code!(KeyCode::Enter) => Some(Msg::UuidPageGenerate),
@@ -215,9 +262,9 @@ impl Page for UuidPage {
 
     fn helps(&self) -> Vec<&str> {
         let mut helps: Vec<&str> = Vec::new();
-        helps.push("<C-n/C-p> Select item");
+        helps.push("<Ctl-n/Ctl-p> <Shft-n/Shft-p> ");
         if !matches!(self.cur.item, PageItems::Output) {
-            helps.push("<Left/Right> Select current item value");
+            helps.push("< h  l > Left/Right ");
         }
         helps.push("<Enter> Generate uuid");
         if matches!(self.cur.item, PageItems::Output) {
