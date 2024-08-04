@@ -80,6 +80,8 @@ impl App {
             key_code_char!('Q') => Some(Msg::Quit),
             key_code_char!('c', Ctrl) => Some(Msg::Quit),
             key_code!(KeyCode::Tab) => Some(Msg::SwitchPane),
+            key_code!(KeyCode::Right) => Some(Msg::SwitchPane),
+            key_code!(KeyCode::Left) => Some(Msg::SwitchPane),
             _ => match self.focused {
                 PaneType::List => self.list_pane.handle_key(key),
                 PaneType::Tool => self.tool_pane.handle_key(key),
