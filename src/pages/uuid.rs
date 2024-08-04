@@ -111,8 +111,12 @@ impl Page for UuidPage {
         match key {
             key_code!(KeyCode::Esc) => Some(Msg::Quit),
             key_code_char!('n', Ctrl) => Some(Msg::UuidPageSelectNextItem),
+            key_code_char!('N') => Some(Msg::UuidPageSelectNextItem),
             key_code_char!('p', Ctrl) => Some(Msg::UuidPageSelectPrevItem),
-            key_code_char!('l') | key_code!(KeyCode::Right) => {
+            key_code_char!('P') => Some(Msg::UuidPageSelectPrevItem),
+
+            //
+            key_code_char!('l') => {
                 Some(Msg::UuidPageCurrentItemSelectNext)
             }
             key_code_char!('h') | key_code!(KeyCode::Left) => {
@@ -122,6 +126,8 @@ impl Page for UuidPage {
             key_code_char!('k') | key_code!(KeyCode::Up) => Some(Msg::UuidPageScrollUp),
             key_code_char!('y') => Some(Msg::UuidPageCopy),
             key_code_char!('p') => Some(Msg::UuidPagePaste),
+
+            //
             key_code!(KeyCode::Enter) => Some(Msg::UuidPageGenerate),
             _ => None,
         }
