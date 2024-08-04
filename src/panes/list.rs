@@ -56,7 +56,9 @@ impl Pane for ListPane {
         match key {
             key_code!(KeyCode::Esc) => Some(Msg::Quit),
             key_code_char!('n', Ctrl) => Some(Msg::ListPaneSelectNext),
+            key_code!(KeyCode::Down) => Some(Msg::ListPaneSelectNext),
             key_code_char!('p', Ctrl) => Some(Msg::ListPaneSelectPrev),
+            key_code!(KeyCode::Up) => Some(Msg::ListPaneSelectPrev),
             _ => None,
         }
     }
