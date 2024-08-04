@@ -77,6 +77,7 @@ impl App {
 
     fn handle_key(&self, key: crossterm::event::KeyEvent) -> Option<Msg> {
         match key {
+            key_code!(KeyCode::Esc) => Some(Msg::Quit),
             key_code_char!('Q') => Some(Msg::Quit),
             key_code_char!('c', Ctrl) => Some(Msg::Quit),
             key_code!(KeyCode::Tab) => Some(Msg::SwitchPane),
