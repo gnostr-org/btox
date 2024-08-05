@@ -110,19 +110,51 @@ impl EncodeItemSelect {
 impl Page for HashPage {
     fn handle_key(&self, key: crossterm::event::KeyEvent) -> Option<Msg> {
         match key {
+            //
             key_code!(KeyCode::Esc) => Some(Msg::Quit),
+
+            //
             key_code_char!('n', Ctrl) => Some(Msg::HashPageSelectNextItem),
-            key_code_char!('p', Ctrl) => Some(Msg::HashPageSelectPrevItem),
+            key_code_char!('N') => Some(Msg::HashPageSelectNextItem),
+            key_code!(KeyCode::Down) => Some(Msg::HashPageSelectNextItem),
+            key_code_char!('m', Ctrl) => Some(Msg::HashPageSelectPrevItem),
+            key_code_char!('M') => Some(Msg::HashPageSelectPrevItem),
+            key_code!(KeyCode::Up) => Some(Msg::HashPageSelectPrevItem),
+
+            //
             key_code_char!('l') | key_code!(KeyCode::Right) => {
                 Some(Msg::HashPageCurrentItemSelectNext)
             }
+            key_code_char!('L') => {
+                Some(Msg::HashPageCurrentItemSelectNext)
+            }
+            key_code_char!('>') => {
+                Some(Msg::HashPageCurrentItemSelectNext)
+            }
+            //
             key_code_char!('h') | key_code!(KeyCode::Left) => {
                 Some(Msg::HashPageCurrentItemSelectPrev)
             }
-            key_code_char!('j') | key_code!(KeyCode::Down) => Some(Msg::HashPageScrollDown),
-            key_code_char!('k') | key_code!(KeyCode::Up) => Some(Msg::HashPageScrollUp),
+            key_code_char!('H') => {
+                Some(Msg::HashPageCurrentItemSelectPrev)
+            }
+            key_code_char!('<') => {
+                Some(Msg::HashPageCurrentItemSelectPrev)
+            }
+            //
+            key_code_char!('j') => Some(Msg::HashPageScrollDown),
+            key_code_char!('J') => Some(Msg::HashPageScrollDown),
+            key_code_char!('k') => Some(Msg::HashPageScrollUp),
+            key_code_char!('K') => Some(Msg::HashPageScrollUp),
+
+            //
             key_code_char!('y') => Some(Msg::HashPageCopy),
-            key_code_char!('p') => Some(Msg::HashPagePaste),
+
+            key_code_char!('v', Ctrl) => Some(Msg::HashPageCopy),
+            key_code_char!('V') => Some(Msg::HashPageCopy),
+
+            key_code_char!('p', Ctrl) => Some(Msg::HashPagePaste),
+            key_code_char!('P') => Some(Msg::HashPagePaste),
             _ => None,
         }
     }
