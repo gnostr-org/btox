@@ -164,9 +164,9 @@ impl Page for UuidPage {
 
             // Copy
             // Common Key Command
-            key_code_char!('v', Ctrl) => Some(Msg::UuidPageCopy),
+            key_code_char!('c', Ctrl) => Some(Msg::UuidPageCopy),
             // Shift v
-            key_code_char!('V') => Some(Msg::UuidPageCopy),
+            key_code_char!('C') => Some(Msg::UuidPageCopy),
 
             // Paste
             // Common Key Command

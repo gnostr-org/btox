@@ -79,7 +79,7 @@ impl App {
         match key {
             key_code!(KeyCode::Esc) => Some(Msg::Quit),
             key_code_char!('Q') => Some(Msg::Quit),
-            key_code_char!('c', Ctrl) => Some(Msg::Quit),
+            // key_code_char!('c', Ctrl) => Some(Msg::Quit), //reserve for Ctrl-c (copy)
             key_code!(KeyCode::Tab) => Some(Msg::SwitchPane),
             key_code!(KeyCode::Right) => Some(Msg::SwitchPane),
             key_code!(KeyCode::Left) => Some(Msg::SwitchPane),
