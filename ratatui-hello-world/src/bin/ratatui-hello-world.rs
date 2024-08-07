@@ -1,13 +1,10 @@
-use ratatui_hello_world::add;
 use std::io::{self, stdout};
 
 use ratatui::{
     backend::CrosstermBackend,
     crossterm::{
         event::{self, Event, KeyCode},
-        terminal::{
-            disable_raw_mode, enable_raw_mode, EnterAlternateScreen, LeaveAlternateScreen,
-        },
+        terminal::{disable_raw_mode, enable_raw_mode, EnterAlternateScreen, LeaveAlternateScreen},
         ExecutableCommand,
     },
     widgets::{Block, Paragraph},

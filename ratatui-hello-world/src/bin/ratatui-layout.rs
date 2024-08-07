@@ -4,9 +4,7 @@ use ratatui::{
     backend::CrosstermBackend,
     crossterm::{
         event::{self, Event, KeyCode},
-        terminal::{
-            disable_raw_mode, enable_raw_mode, EnterAlternateScreen, LeaveAlternateScreen,
-        },
+        terminal::{disable_raw_mode, enable_raw_mode, EnterAlternateScreen, LeaveAlternateScreen},
         ExecutableCommand,
     },
     widgets::Block,
@@ -46,9 +44,11 @@ fn ui(frame: &mut Frame) {
         ratatui::prelude::Constraint::Length(1),
     ])
     .areas(frame.area());
-    let [left_area, right_area] =
-        ratatui::prelude::Layout::horizontal([ratatui::prelude::Constraint::Percentage(50), ratatui::prelude::Constraint::Percentage(50)])
-            .areas(main_area);
+    let [left_area, right_area] = ratatui::prelude::Layout::horizontal([
+        ratatui::prelude::Constraint::Percentage(50),
+        ratatui::prelude::Constraint::Percentage(50),
+    ])
+    .areas(main_area);
 
     frame.render_widget(Block::bordered().title("Title Bar"), title_area);
     frame.render_widget(Block::bordered().title("Status Bar"), status_area);
